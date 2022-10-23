@@ -29,7 +29,7 @@ export class StaticSiteByCdkStack extends Stack {
     });
 
     new s3deploy.BucketDeployment(this, 'DeployWebsite', {
-      sources: [s3deploy.Source.asset('./siteassets')],
+      sources: [s3deploy.Source.asset('../site-contents')],
       destinationBucket: assetsBucket
     });
 
