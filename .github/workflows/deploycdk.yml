@@ -1,0 +1,48 @@
+# This project is created as an example to show CDK builds in a workflow for VWA
+# cdk bootstrap run locally on us-east-1, not in the action. 
+# If you delete and rebootstrap, make sure you delete the cdk S3 assets bucket first.
+name: Deploy CDK Project
+on:
+  push
+env: 
+  AWS_REGION : 'us-east-1'
+  AWS_ACCOUNT : '047322864698'
+permissions: 
+    id-token: write
+    contents: read #Required for checkout
+jobs:
+  DeployCDK:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone the repo
+        uses: actions/checkout@v3
+      - name: Configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:   
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT }}:role/GitHubActionsRole
+          role-session-name: samplerolesession
+          aws-region: ${{ env.AWS_REGION }}
+      - name: cdk diff
+        uses: youyo/aws-cdk-github-actions@v2
+        with: 
+          cdk_subcommand: 'diff'
+          actions_comment: true
+        env:
+          AWS_DEFAULT_REGION: '${{ env.AWS_REGION }}'
+
+      - name: cdk synth
+        uses: youyo/aws-cdk-github-actions@v2
+        with: 
+          cdk_subcommand: 'synth'
+          cdk_args: '-c domain=aws.efrap.com -c subdomain=www'
+        env:
+          AWS_DEFAULT_REGION: '${{ env.AWS_REGION }}'
+
+      - name: cdk deploy
+        uses: youyo/aws-cdk-github-actions@v2
+        with:
+          cdk_subcommand: 'deploy'
+          cdk_args: '--require-approval never'
+          actions_comment: true
+        env:
+          AWS_DEFAULT_REGION: '${{ env.AWS_REGION }}'
