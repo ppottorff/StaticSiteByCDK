@@ -14,7 +14,7 @@ export class StaticSiteByCdkStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const domainName = "www.aws.efrap.com";
+    const domainName = "aws.efrap.com";
 
     const assetsBucket = new s3.Bucket(this, 'WebsiteBucket', {
       publicReadAccess: false,
@@ -34,6 +34,7 @@ export class StaticSiteByCdkStack extends Stack {
     }));
 
     const zone = route53.HostedZone.fromLookup(this, 'HostedZone', { domainName: domainName });
+    
 
     const certificate = new acm.DnsValidatedCertificate(this, 'SiteCertificate',
       {

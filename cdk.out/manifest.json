@@ -1,0 +1,136 @@
+{
+  "version": "21.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "StaticSiteByCdkStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "StaticSiteByCdkStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "StaticSiteByCdkStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://047322864698/us-east-1",
+      "properties": {
+        "templateFile": "StaticSiteByCdkStack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::047322864698:role/cdk-hnb659fds-deploy-role-047322864698-us-east-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::047322864698:role/cdk-hnb659fds-cfn-exec-role-047322864698-us-east-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-047322864698-us-east-1/228f5338853ec534c4a1ae9d38577b2c96cde8bd68ce9fe91ca570d7775c76a5.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "StaticSiteByCdkStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::047322864698:role/cdk-hnb659fds-lookup-role-047322864698-us-east-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "StaticSiteByCdkStack.assets"
+      ],
+      "metadata": {
+        "/StaticSiteByCdkStack/WebsiteBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "WebsiteBucket75C24D94"
+          }
+        ],
+        "/StaticSiteByCdkStack/WebsiteBucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "WebsiteBucketPolicyE10E3262"
+          }
+        ],
+        "/StaticSiteByCdkStack/CloudFrontOriginAccessIdentity/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CloudFrontOriginAccessIdentity04EB66DA"
+          }
+        ],
+        "/StaticSiteByCdkStack/SiteCertificate/CertificateRequestorFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SiteCertificateCertificateRequestorFunctionServiceRole645E891D"
+          }
+        ],
+        "/StaticSiteByCdkStack/SiteCertificate/CertificateRequestorFunction/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SiteCertificateCertificateRequestorFunctionServiceRoleDefaultPolicy96ED5C9C"
+          }
+        ],
+        "/StaticSiteByCdkStack/SiteCertificate/CertificateRequestorFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SiteCertificateCertificateRequestorFunction7CFA7DEA"
+          }
+        ],
+        "/StaticSiteByCdkStack/SiteCertificate/CertificateRequestorResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SiteCertificateCertificateRequestorResource6021082A"
+          }
+        ],
+        "/StaticSiteByCdkStack/Function/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Function76856677"
+          }
+        ],
+        "/StaticSiteByCdkStack/SecurityHeadersResponseHeaderPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SecurityHeadersResponseHeaderPolicy85731267"
+          }
+        ],
+        "/StaticSiteByCdkStack/CloudFrontDistribution/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CloudFrontDistributionBA64CE3A"
+          }
+        ],
+        "/StaticSiteByCdkStack/ARecord/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ARecordE7B57761"
+          }
+        ],
+        "/StaticSiteByCdkStack/AWSCloudFrontPartitionHostedZoneIdMap": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AWSCloudFrontPartitionHostedZoneIdMap"
+          }
+        ],
+        "/StaticSiteByCdkStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/StaticSiteByCdkStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/StaticSiteByCdkStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "StaticSiteByCdkStack"
+    }
+  }
+}
