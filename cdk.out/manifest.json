@@ -23,7 +23,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::047322864698:role/cdk-hnb659fds-deploy-role-047322864698-us-east-1",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::047322864698:role/cdk-hnb659fds-cfn-exec-role-047322864698-us-east-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-047322864698-us-east-1/228f5338853ec534c4a1ae9d38577b2c96cde8bd68ce9fe91ca570d7775c76a5.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-047322864698-us-east-1/e60080e938b303245cc2aeb541a50da17f08f25a0ad545b9d5a652cb99dbe66d.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -49,6 +49,24 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "WebsiteBucketPolicyE10E3262"
+          }
+        ],
+        "/StaticSiteByCdkStack/WebsiteBucket/AutoDeleteObjectsCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "WebsiteBucketAutoDeleteObjectsCustomResource8750E461"
+          }
+        ],
+        "/StaticSiteByCdkStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+          }
+        ],
+        "/StaticSiteByCdkStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
           }
         ],
         "/StaticSiteByCdkStack/CloudFrontOriginAccessIdentity/Resource": [
@@ -93,10 +111,58 @@
             "data": "SecurityHeadersResponseHeaderPolicy85731267"
           }
         ],
+        "/StaticSiteByCdkStack/CloudFrontLogBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CloudFrontLogBucketE75E505A"
+          }
+        ],
+        "/StaticSiteByCdkStack/CloudFrontLogBucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CloudFrontLogBucketPolicy300B6FAE"
+          }
+        ],
+        "/StaticSiteByCdkStack/CloudFrontLogBucket/AutoDeleteObjectsCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CloudFrontLogBucketAutoDeleteObjectsCustomResource795D54EB"
+          }
+        ],
         "/StaticSiteByCdkStack/CloudFrontDistribution/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CloudFrontDistributionBA64CE3A"
+          }
+        ],
+        "/StaticSiteByCdkStack/DeployWebsite/AwsCliLayer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeployWebsiteAwsCliLayer17DBC421"
+          }
+        ],
+        "/StaticSiteByCdkStack/DeployWebsite/CustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeployWebsiteCustomResourceD116527B"
+          }
+        ],
+        "/StaticSiteByCdkStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265"
+          }
+        ],
+        "/StaticSiteByCdkStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF"
+          }
+        ],
+        "/StaticSiteByCdkStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C81C01536"
           }
         ],
         "/StaticSiteByCdkStack/ARecord/Resource": [

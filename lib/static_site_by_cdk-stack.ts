@@ -8,7 +8,7 @@ import * as route53 from 'aws-cdk-lib/aws-route53';
 import * as route53targets from 'aws-cdk-lib/aws-route53-targets';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
-import { ViewerProtocolPolicy } from 'aws-cdk-lib/aws-cloudfront';
+import { Distribution, ViewerProtocolPolicy } from 'aws-cdk-lib/aws-cloudfront';
 
 
 export class StaticSiteByCdkStack extends Stack {
@@ -21,18 +21,7 @@ export class StaticSiteByCdkStack extends Stack {
       publicReadAccess: false,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       removalPolicy: RemovalPolicy.DESTROY,
-      autoDeleteObjects: true,
-      websiteIndexDocument: 'index.html',
-      accessControl: s3.BucketAccessControl.PRIVATE,
-      objectOwnership: s3.ObjectOwnership.BUCKET_OWNER_ENFORCED,
-      encryption: s3.BucketEncryption.S3_MANAGED,
-    });
-
-    new s3deploy.BucketDeployment(this, 'DeployWebsite', {
-      sources: [s3deploy.Source.asset('../site-contents')],
-      destinationBucket: assetsBucket,
-      distribution: assetsBucket,
-      distributionPaths: ['/*']
+      autoDeleteObjects: true
     });
 
     const cloudfrontOriginAccessIdentity = new cloudfront.OriginAccessIdentity(this, 'CloudFrontOriginAccessIdentity');
@@ -93,6 +82,16 @@ export class StaticSiteByCdkStack extends Stack {
     const cloudfrontDistribution = new cloudfront.Distribution(this, 'CloudFrontDistribution', {
       certificate: certificate,
       domainNames: [domainName],
+      enableLogging: true,
+      logBucket: new s3.Bucket(this, 'CloudFrontLogBucket', {
+        blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+        publicReadAccess: false,
+        removalPolicy: RemovalPolicy.DESTROY, 
+        autoDeleteObjects: true,
+        encryption: s3.BucketEncryption.S3_MANAGED,
+      }),
+      logFilePrefix: 'cloudfront',
+      logIncludesCookies: true,
       defaultRootObject: 'index.html',
       defaultBehavior: {
         origin: new origins.S3Origin(assetsBucket, {
@@ -105,6 +104,13 @@ export class StaticSiteByCdkStack extends Stack {
         viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         responseHeadersPolicy: responseHeaderPolicy
       },
+    });
+
+    new s3deploy.BucketDeployment(this, 'DeployWebsite', {
+      sources: [s3deploy.Source.asset('./site-contents')],
+      destinationBucket: assetsBucket,
+      distribution: cloudfrontDistribution,
+      distributionPaths: ['/*']
     });
 
     new route53.ARecord(this, 'ARecord', {
