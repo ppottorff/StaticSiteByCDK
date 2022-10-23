@@ -7,6 +7,7 @@ import * as iam from 'aws-cdk-lib/aws-iam';
 import * as route53 from 'aws-cdk-lib/aws-route53';
 import * as route53targets from 'aws-cdk-lib/aws-route53-targets';
 import * as s3 from 'aws-cdk-lib/aws-s3';
+import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
 import { ViewerProtocolPolicy } from 'aws-cdk-lib/aws-cloudfront';
 
 
@@ -19,10 +20,17 @@ export class StaticSiteByCdkStack extends Stack {
     const assetsBucket = new s3.Bucket(this, 'WebsiteBucket', {
       publicReadAccess: false,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
-      removalPolicy: RemovalPolicy.RETAIN,
+      removalPolicy: RemovalPolicy.DESTROY,
+      autoDeleteObjects: true,
+      websiteIndexDocument: 'index.html',
       accessControl: s3.BucketAccessControl.PRIVATE,
       objectOwnership: s3.ObjectOwnership.BUCKET_OWNER_ENFORCED,
       encryption: s3.BucketEncryption.S3_MANAGED,
+    });
+
+    new s3deploy.BucketDeployment(this, 'DeployWebsite', {
+      sources: [s3deploy.Source.asset('../site-contents')],
+      destinationBucket: assetsBucket
     });
 
     const cloudfrontOriginAccessIdentity = new cloudfront.OriginAccessIdentity(this, 'CloudFrontOriginAccessIdentity');
@@ -34,7 +42,7 @@ export class StaticSiteByCdkStack extends Stack {
     }));
 
     const zone = route53.HostedZone.fromLookup(this, 'HostedZone', { domainName: domainName });
-    
+
 
     const certificate = new acm.DnsValidatedCertificate(this, 'SiteCertificate',
       {
