@@ -30,7 +30,9 @@ export class StaticSiteByCdkStack extends Stack {
 
     new s3deploy.BucketDeployment(this, 'DeployWebsite', {
       sources: [s3deploy.Source.asset('../site-contents')],
-      destinationBucket: assetsBucket
+      destinationBucket: assetsBucket,
+      distribution: assetsBucket,
+      distributionPaths: ['/*']
     });
 
     const cloudfrontOriginAccessIdentity = new cloudfront.OriginAccessIdentity(this, 'CloudFrontOriginAccessIdentity');
