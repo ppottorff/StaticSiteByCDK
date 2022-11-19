@@ -108,3 +108,10 @@ dist
 
 # remove cdk.out
 cdk.out
+.DS_Store
+nodesource_setup.sh
+bin/static_site_by_cdk.js
+cdk.out/manifest.json
+cdk.out/StaticSiteByCdkStack.assets.json
+cdk.out/StaticSiteByCdkStack.template.json
+lib/static_site_by_cdk-stack.js
