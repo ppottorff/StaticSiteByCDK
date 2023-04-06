@@ -6,7 +6,7 @@ on:
   push
 env: 
   AWS_REGION : 'us-east-1'
-  AWS_ACCOUNT : '047322864698'
+  AWS_ACCOUNT : ${{ secrets.ACCOUNTNUMBER }}
 permissions: 
     id-token: write
     contents: read #Required for checkout
